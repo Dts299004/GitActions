@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::content})}">
+
+<head>
+    <title>Giỏ hàng - Thế Giới Di Động</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+
+        <style>
+            .cart-page {
+                background: #fff;
+                border-radius: 10px;
+                padding: 24px;
+                min-height: 400px;
+            }
+            .cart-title {
+                font-size: 22px;
+                font-weight: 800;
+                color: #cd1818;
+                border-bottom: 3px solid #cd1818;
+                padding-bottom: 10px;
+                margin-bottom: 20px;
+            }
+            .cart-table th {
+                background: #cd1818;
+                color: #fff;
+                font-weight: 600;
+                font-size: 13px;
+            }
+            .cart-table td {
+                vertical-align: middle;
+                font-size: 13px;
+            }
+            .cart-img {
+                width: 60px;
+                height: 60px;
+                object-fit: contain;
+                border-radius: 6px;
+                border: 1px solid #eee;
+            }
+            .qty-input {
+                width: 70px;
+                text-align: center;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 4px 6px;
+            }
+            .cart-summary {
+                background: #fff9f9;
+                border: 1px solid #f5c6c6;
+                border-radius: 10px;
+                padding: 20px;
+            }
+            .checkout-btn {
+                background: #cd1818;
+                border: none;
+                color: #fff;
+                font-weight: 700;
+                font-size: 15px;
+                padding: 12px 30px;
+                border-radius: 6px;
+                width: 100%;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            .checkout-btn:hover {
+                background: #a51212;
+            }
+            .cart-empty {
+                text-align: center;
+                padding: 60px 20px;
+                color: #aaa;
+            }
+            .cart-empty i {
+                font-size: 64px;
+                color: #e0e0e0;
+                margin-bottom: 16px;
+                display: block;
+            }
+            .badge-alert {
+                font-size: 14px;
+                padding: 10px 16px;
+                border-radius: 6px;
+                margin-bottom: 16px;
+            }
+        </style>
+
+        <div class="cart-page">
+            <h2 class="cart-title"><i class="fas fa-shopping-cart me-2"></i>Giỏ hàng của bạn</h2>
+
+            <!-- Flash messages -->
+            <div th:if="${success}" class="alert alert-success badge-alert" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-danger badge-alert" th:text="${error}"></div>
+
+            <!-- Empty cart -->
+            <div th:if="${#lists.isEmpty(cartItems)}" class="cart-empty">
+                <i class="fas fa-shopping-basket"></i>
+                <p class="fs-5 fw-bold text-muted">Giỏ hàng trống!</p>
+                <a href="/products" class="btn btn-danger mt-2">
+                    <i class="fas fa-arrow-left me-1"></i> Tiếp tục mua sắm
+                </a>
+            </div>
+
+            <!-- Cart table -->
+            <div th:if="${!#lists.isEmpty(cartItems)}">
+                <div class="table-responsive">
+                    <table class="table cart-table align-middle">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 50px;">
+                                    <input type="checkbox" id="selectAll" checked onclick="toggleAll(this)">
+                                </th>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item, iStat : ${cartItems}">
+                                <td class="text-center">
+                                    <input type="checkbox" name="indices" th:value="${iStat.index}" 
+                                           class="item-checkbox" checked form="checkoutForm"
+                                           onclick="updateTotal()">
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img th:src="${item.productImage != null ? item.productImage : 'https://placehold.co/60x60'}"
+                                            class="cart-img" alt="img">
+                                        <span th:text="${item.productName}" class="fw-bold"></span>
+                                    </div>
+                                </td>
+                                <td class="text-danger fw-bold"
+                                    th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'COMMA', 0, 'POINT')} + '₫'"></td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <input type="number" name="quantity" class="qty-input"
+                                            th:value="${item.quantity}" min="1"
+                                            th:data-unit-price="${item.unitPrice}"
+                                            th:data-index="${iStat.index}"
+                                            onchange="updateQuantityAjax(this)">
+                                    </div>
+                                </td>
+                                <td class="text-danger fw-bold item-subtotal"
+                                    th:text="${#numbers.formatDecimal(item.subtotal, 0, 'COMMA', 0, 'POINT')} + '₫'"></td>
+                                <td>
+                                    <a th:href="@{/cart/remove/{i}(i=${iStat.index})}"
+                                        class="btn btn-sm btn-danger"
+                                        onclick="return confirm('Xóa sản phẩm này khỏi giỏ?')">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Summary -->
+                <div class="row justify-content-end">
+                    <div class="col-md-4">
+                        <div class="cart-summary">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Tổng số sản phẩm:</span>
+                                <span class="fw-bold" id="totalItemsDisplay" th:text="${cartItems.size()}"></span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Tổng tiền hàng:</span>
+                                <span class="fw-bold" id="itemsTotal" th:text="${#numbers.formatDecimal(cartTotal, 0, 'COMMA', 0, 'POINT')} + '₫'"></span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Phí vận chuyển:</span>
+                                <span class="fw-bold text-success" id="shippingFee">30,000₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2 border-top pt-2">
+                                <span class="text-muted">Điểm tích lũy dự kiến:</span>
+                                <span class="fw-bold text-primary" id="loyaltyPoints">0đ</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3 mt-2 border-top pt-2">
+                                <span class="fs-5 fw-bold">Tổng thanh toán:</span>
+                                <span class="fs-5 fw-bold text-danger" id="grandTotal">0₫</span>
+                            </div>
+
+                            <form id="checkoutForm" th:action="@{/cart/checkout}" method="post" class="mt-4">
+                                <h6 class="fw-bold mb-3 text-dark"><i class="fas fa-info-circle me-1 text-danger"></i>Thông tin nhận hàng</h6>
+                                <div class="mb-2">
+                                    <input type="text" name="customerName" class="form-control form-control-sm" placeholder="Họ tên người nhận *" required>
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" name="customerPhone" class="form-control form-control-sm" placeholder="Số điện thoại *" required>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea name="customerAddress" class="form-control form-control-sm" rows="2" placeholder="Địa chỉ giao hàng"></textarea>
+                                </div>
+                                <button type="submit" class="checkout-btn">
+                                    <i class="fas fa-credit-card me-2"></i>Thanh toán ngay
+                                </button>
+                            </form>
+                            <div class="text-center mt-3">
+                                <a href="/products" class="text-danger text-decoration-none" style="font-size: 13px;">
+                                    <i class="fas fa-arrow-left me-1"></i> Tiếp tục mua sắm
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function updateQuantityAjax(input) {
+                let qty = parseInt(input.value);
+                if (qty < 1) {
+                    qty = 1;
+                    input.value = 1;
+                }
+                const index = input.getAttribute('data-index');
+                
+                // Cập nhật ngầm lên Server (không reload trang)
+                const formData = new URLSearchParams();
+                formData.append('index', index);
+                formData.append('quantity', qty);
+                fetch('/cart/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                })
+                .then(async res => {
+                    if (!res.ok) {
+                        const errorText = await res.text();
+                        alert(errorText);
+                        window.location.reload(); // reload để reset UI nếu lỗi
+                    } else {
+                        // Cập nhật giao diện đơn giá của dòng này
+                        const row = input.closest('tr');
+                        const unitPrice = parseFloat(input.getAttribute('data-unit-price'));
+                        const subtotal = unitPrice * qty;
+                        const formatter = new Intl.NumberFormat('vi-VN');
+                        row.querySelector('.item-subtotal').textContent = formatter.format(Math.round(subtotal)) + '₫';
+                        
+                        // Tính lại toàn bộ giỏ
+                        updateTotal();
+                    }
+                })
+                .catch(err => console.error(err));
+            }
+
+            function toggleAll(master) {
+                const checkboxes = document.getElementsByClassName('item-checkbox');
+                for (let i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = master.checked;
+                }
+                updateTotal();
+            }
+
+            function updateTotal() {
+                const checkboxes = document.getElementsByClassName('item-checkbox');
+                let subtotal = 0;
+                let totalItemsCount = 0;
+                let selectedCount = 0;
+
+                for (let i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        const row = checkboxes[i].closest('tr');
+                        const qtyInput = row.querySelector('.qty-input');
+                        const quantity = parseInt(qtyInput.value);
+                        const unitPrice = parseFloat(qtyInput.getAttribute('data-unit-price'));
+
+                        subtotal += (unitPrice * quantity);
+                        totalItemsCount += quantity;
+                        selectedCount++;
+                    }
+                }
+                
+                // 1. Phí ship: 30k mặc định, free nếu subtotal >= 1tr VÀ tổng số lượng >= 2
+                let shipping = (selectedCount > 0) ? 30000 : 0;
+                if (subtotal >= 1000000 && totalItemsCount >= 2) {
+                    shipping = 0;
+                }
+
+                // 2. Điểm tích lũy: 7.500 = 1đ
+                let points = Math.floor(subtotal / 7500);
+
+                // 3. Tổng thanh toán
+                let grandTotal = subtotal + shipping;
+                
+                // Format & Display
+                const formatter = new Intl.NumberFormat('vi-VN');
+                
+                document.getElementById('totalItemsDisplay').textContent = totalItemsCount;
+                document.getElementById('itemsTotal').textContent = formatter.format(Math.round(subtotal)) + '₫';
+                document.getElementById('shippingFee').textContent = (shipping === 0 && selectedCount > 0) ? 'Miễn phí' : formatter.format(shipping) + '₫';
+                document.getElementById('loyaltyPoints').textContent = formatter.format(points) + 'đ';
+                document.getElementById('grandTotal').textContent = formatter.format(Math.round(grandTotal)) + '₫';
+                
+                // Update UI states
+                document.getElementById('selectAll').checked = (selectedCount === checkboxes.length && checkboxes.length > 0);
+                
+                const checkoutBtn = document.querySelector('.checkout-btn');
+                checkoutBtn.disabled = (selectedCount === 0);
+                checkoutBtn.style.opacity = (selectedCount === 0) ? '0.5' : '1';
+            }
+            
+            document.addEventListener('DOMContentLoaded', updateTotal);
+        </script>
+    </div>
+</body>
+</html>

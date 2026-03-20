@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanh toán MoMo - Thế Giới Di Động</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .momo-container { max-width: 500px; margin: 50px auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .momo-header { background-color: #ae2070; color: white; padding: 20px; text-align: center; }
+        .momo-logo { width: 60px; height: 60px; margin-bottom: 10px; }
+        .momo-body { padding: 30px; }
+        .order-info { border-bottom: 1px dashed #ddd; padding-bottom: 15px; margin-bottom: 20px; }
+        .amount-row { font-size: 24px; font-weight: bold; color: #ae2070; margin-bottom: 15px; text-align: center; }
+        .momo-btn { background-color: #ae2070; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; width: 100%; transition: 0.3s; }
+        .momo-btn:hover { background-color: #8e1a5c; transform: scale(1.02); color: white; }
+        .momo-footer { text-align: center; padding: 20px; font-size: 13px; color: #777; background: #fafafa; }
+        .test-badge { background: #ffc107; color: black; padding: 2px 8px; border-radius: 4px; font-size: 11px; vertical-align: middle; margin-left: 5px; font-weight: bold;}
+    </style>
+</head>
+<body>
+    <div class="momo-container">
+        <div class="momo-header">
+            <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" class="momo-logo" alt="MoMo">
+            <h5>CỔNG THANH TOÁN MOMO <span class="test-badge">SANDBOX</span></h5>
+        </div>
+        <div class="momo-body">
+            <div class="order-info">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Khách hàng:</span>
+                    <span class="fw-bold" th:text="${customerName}">Nguyễn Văn A</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Mã đơn hàng:</span>
+                    <span class="fw-bold text-truncate ms-3" style="max-width: 200px;" th:text="${orderId}">ORD-123456</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Điểm tích lũy:</span>
+                    <span class="fw-bold text-primary" th:text="${points + 'đ'}">0đ</span>
+                </div>
+            </div>
+            
+            <div class="amount-row">
+                <span th:text="${#numbers.formatDecimal(amount, 0, 'COMMA', 0, 'POINT')} + '₫'">0₫</span>
+            </div>
+            
+            <p class="text-center text-muted mb-4 small">Quét mã hoặc nhấn nút bên dưới để hoàn tất thanh toán trong môi trường thử nghiệm.</p>
+            
+            <div class="text-center mb-4">
+                <img th:src="'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MoMoPaid_' + ${orderId}" alt="QR Code">
+            </div>
+            
+            <form action="/products" method="get">
+                <button type="submit" class="momo-btn shadow-sm">XÁC NHẬN THANH TOÁN (MÔ PHỎNG)</button>
+            </form>
+            
+            <a href="/cart" class="btn btn-link w-100 text-decoration-none mt-2 text-muted small">Quay lại giỏ hàng</a>
+        </div>
+        <div class="momo-footer">
+            <i class="fas fa-shield-alt me-1"></i> Thanh toán an toàn bởi MoMo Sandbox <br>
+            &copy; 2024 Thế Giới Di Động Demo
+        </div>
+    </div>
+</body>
+</html>

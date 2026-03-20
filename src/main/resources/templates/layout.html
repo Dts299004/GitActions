@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thegioididong.com - Điện thoại, Laptop, Phụ kiện, Đồng hồ chính hãng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --tgdd-yellow: #FFD400;
+            --tgdd-red: #cd1818;
+            --tgdd-bg: #f3f3f3;
+        }
+
+        html {
+            min-height: 100%;
+        }
+
+        body {
+            /* Ensure background covers the entire page */
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+
+            /* Full Red Background */
+            background-color: #cd1818;
+            background-image: linear-gradient(180deg, #cd1818 0%, #900000 100%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            background-color: var(--tgdd-red);
+            text-align: center;
+        }
+
+        .top-banner img {
+            max-width: 1200px;
+            width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--tgdd-yellow);
+            padding-bottom: 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .header-top {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            gap: 15px;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #000;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            background: #000;
+            color: var(--tgdd-yellow);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            font-weight: 900;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text small {
+            font-size: 11px;
+        }
+
+        /* Search */
+        .search-container {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            padding: 9px 40px 9px 15px;
+            font-size: 13px;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0px;
+            top: 0;
+            height: 100%;
+            width: 40px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Utility Links */
+        .utility-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .util-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            padding: 5px 8px;
+            border-radius: 4px;
+        }
+
+        .util-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .location-badge {
+            background-color: #FFBC06;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0 10px 0;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #000;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            padding: 5px 0;
+        }
+
+        .nav-item:hover {
+            opacity: 0.8;
+        }
+
+        .nav-item i {
+            margin-right: 5px;
+            font-size: 16px;
+        }
+
+
+        /* Banner Area */
+        .banner-section {
+            padding-bottom: 20px;
+        }
+
+        .big-banner-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+
+        /* Side Banners/Labels */
+        .side-banner-left,
+        .side-banner-right {
+            position: fixed;
+            top: 150px;
+            /* Adjusted to sit better */
+            width: 160px;
+            /* Increased width for better visibility */
+            z-index: 10;
+            pointer-events: none;
+            /* Let clicks pass through if they cover content */
+        }
+
+        .side-banner-left {
+            left: 10px;
+        }
+
+        .side-banner-right {
+            right: 10px;
+        }
+
+        .side-banner-left img,
+        .side-banner-right img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 1500px) {
+
+            .side-banner-left,
+            .side-banner-right {
+                display: none;
+            }
+        }
+
+        /* Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: transparent;
+            min-height: 500px;
+            padding: 20px 0;
+            border-radius: 4px;
+        }
+
+        /* ===== MEGA MENU ===== */
+        .nav-item-wrapper {
+            position: relative;
+        }
+
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 860px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+            z-index: 9999;
+            padding: 20px 24px;
+            border-top: 3px solid #cd1818;
+            animation: megaFadeIn 0.15s ease;
+        }
+
+        @keyframes megaFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .nav-item-wrapper:hover .mega-menu {
+            display: block;
+        }
+
+        /* Keep mega-menu open when mouse is over it */
+        .mega-menu:hover {
+            display: block;
+        }
+
+        .mega-menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 32px;
+        }
+
+        .mega-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1.5px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mega-section-title i {
+            color: #cd1818;
+            font-size: 13px;
+        }
+
+        .mega-sub-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+        }
+
+        .mega-sub-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 6px 4px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 11px;
+            line-height: 1.3;
+            gap: 5px;
+        }
+
+        .mega-sub-item:hover {
+            background: #fff5f5;
+            color: #cd1818;
+            transform: translateY(-1px);
+        }
+
+        .mega-sub-icon {
+            width: 48px;
+            height: auto;
+            min-height: 40px;
+            border-radius: 4px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #555;
+            border: 1px solid #ececec;
+            transition: all 0.15s ease;
+            flex-shrink: 0;
+            padding: 2px;
+        }
+
+        .mega-sub-item:hover .mega-sub-icon {
+            background: #fff0f0;
+            border-color: #ffbdbd;
+            color: #cd1818;
+        }
+
+        .mega-sub-name {
+            max-width: 64px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mega-footer {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Side Banners/Labels -->
+    <div class="side-banner-left">
+        <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/lunar_new_year/2026/TGDD/label-left.png"
+            alt="Tet Left Decoration">
+    </div>
+    <div class="side-banner-right">
+        <img src="https://cdnv2.tgdd.vn/webmwg/2024/ContentMwg/images/lunar_new_year/2026/TGDD/label-right.png"
+            alt="Tet Right Decoration">
+    </div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <img src="/images/top-banner.png" alt="Tet Sale">
+    </div>
+
+    <header>
+        <div class="header-top">
+            <!-- Logo -->
+            <a href="/products" class="logo">
+                <div class="logo-icon"><i class="fas fa-user"></i></div>
+                <span class="logo-text">thegioididong<small>.com</small></span>
+            </a>
+
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Bạn tìm gì... (Ví dụ: iPhone 15)">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+            </div>
+
+            <!-- Utilities -->
+            <div class="utility-links">
+                <a href="/orders" class="util-item">
+                    <div class="d-flex flex-column text-end me-0">
+                        <span>Lịch sử</span>
+                        <b>Đơn hàng</b>
+                    </div>
+                </a>
+
+                <a href="/cart" class="util-item text-center">
+                    <i class="fas fa-shopping-cart fs-5 me-1"></i>
+                    <span class="d-none d-xl-block">Giỏ hàng</span>
+                </a>
+
+                <div class="d-flex flex-column align-items-center justify-content-center px-2"
+                    style="font-size: 11px; line-height: 1.3;">
+                    <!-- auth-check here -->
+                    <div sec:authorize="!isAuthenticated()" class="d-flex text-center">
+                        <a href="/login" class="text-dark fw-bold text-decoration-none">Đăng nhập</a>
+                        <span class="mx-1 text-dark">|</span>
+                        <a href="/register" class="text-dark text-decoration-none">Đăng ký</a>
+                    </div>
+                    <div sec:authorize="isAuthenticated()" class="dropdown">
+                        <a href="#" class="text-dark fw-bold text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
+                            Hi, <span sec:authentication="name"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item fw-bold text-danger" href="/points"><i class="fas fa-coins text-warning me-1"></i>Đổi điểm tích lũy</a></li>
+                        <li sec:authorize="hasAnyRole('ADMIN', 'MANAGER')"><hr class="dropdown-divider"></li>
+                        <li sec:authorize="hasAnyRole('ADMIN', 'MANAGER')"><a class="dropdown-item" href="/products/add"><i class="fas fa-plus me-1"></i>Thêm sản phẩm</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form th:action="@{/logout}" method="post" style="display:inline;" class="m-0">
+                                    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+                                        <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <a href="#" class="location-badge text-decoration-none">
+                    <i class="fas fa-map-marker-alt me-1"></i>
+                    Hồ Chí Minh
+                    <i class="fas fa-caret-down ms-1"></i>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <a href="/products" class="nav-item"><i class="fas fa-mobile-alt"></i> Điện thoại</a>
+            <a href="#" class="nav-item"><i class="fas fa-laptop"></i> Laptop</a>
+            <a href="#" class="nav-item"><i class="fas fa-tablet-alt"></i> Tablet</a>
+            <!-- Phụ kiện Mega Menu -->
+            <div class="nav-item-wrapper">
+                <a href="/categories/accessories" class="nav-item">
+                    <i class="fas fa-headphones-alt"></i> Phụ kiện
+                    <i class="fas fa-caret-down ms-1" style="font-size: 10px;"></i>
+                </a>
+
+                <!-- Mega Menu Dropdown -->
+                <div class="mega-menu"
+                    th:if="${globalParentCategories != null and !#lists.isEmpty(globalParentCategories)}">
+                    <div class="mega-menu-grid">
+                        <div th:each="parent : ${globalParentCategories}">
+                            <!-- Parent title -->
+                            <div class="mega-section-title">
+                                <i th:class="${parent.icon != null ? parent.icon : 'fas fa-folder'}"></i>
+                                <span th:text="${parent.name}">Nhóm danh mục</span>
+                            </div>
+                            <!-- Children with images -->
+                            <div class="mega-sub-grid"
+                                th:if="${parent.children != null and !#lists.isEmpty(parent.children)}">
+                                <a href="#" class="mega-sub-item" th:each="child : ${parent.children}">
+                                    <div class="mega-sub-icon">
+                                        <!-- Ảnh nếu có -->
+                                        <img th:if="${child.image != null}" th:src="${child.image}"
+                                            th:alt="${child.name}"
+                                            style="width:100%;height:auto;object-fit:contain;border-radius:4px;display:block;"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block'">
+                                        <!-- Fallback icon -->
+                                        <i th:class="${child.icon != null ? child.icon : 'fas fa-tag'}"
+                                            th:style="${child.image != null ? 'display:none' : ''}"></i>
+                                    </div>
+                                    <span class="mega-sub-name" th:text="${child.name}">Tên</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Footer links -->
+                    <div class="mega-footer">
+                        <a href="/categories/accessories" class="btn btn-sm btn-outline-danger">Xem tất cả phụ kiện</a>
+                        <a sec:authorize="hasRole('ADMIN')" href="/categories/add" class="btn btn-sm btn-warning fw-bold"
+                            style="background:#fed700;border-color:#fed700;">+ Thêm danh mục</a>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="nav-item"><i class="fas fa-stopwatch"></i> Smartwatch</a>
+            <a href="#" class="nav-item"><i class="fas fa-clock"></i> Đồng hồ</a>
+            <a href="#" class="nav-item"><i class="fas fa-recycle"></i> Máy cũ, Thu cũ <i class="fas fa-caret-down ms-1"
+                    style="font-size: 10px;"></i></a>
+            <a href="#" class="nav-item"><i class="fas fa-desktop"></i> PC, Máy in <i class="fas fa-caret-down ms-1"
+                    style="font-size: 10px;"></i></a>
+            <a href="#" class="nav-item"><i class="fas fa-sim-card"></i> Sim, Thẻ cào</a>
+            <a href="#" class="nav-item"><i class="fas fa-tools"></i> Dịch vụ tiện ích <i class="fas fa-caret-down ms-1"
+                    style="font-size: 10px;"></i></a>
+        </div>
+    </header>
+
+    <!-- Main Banner & Content Area -->
+    <div class="banner-section">
+        <div class="big-banner-container">
+            <!-- Main Red Banner -->
+            <div style="background: transparent; padding-bottom: 20px;">
+                <img src="/images/banner-horizontal.jpg" class="w-100 rounded" style="display: block;">
+            </div>
+
+            <!-- Content Area -->
+            <div class="main-content" th:insert="${content}">
+                <!-- Page content -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-4 pt-4 border-top bg-white">
+        <div class="container" style="max-width: 1200px;">
+            <div class="row" style="font-size: 12px;">
+                <div class="col-md-3">
+                    <p><strong>Tổng đài hỗ trợ</strong> (Miễn phí gọi)</p>
+                    <p>Gọi mua: <strong>1800.1060</strong> (7:30 - 22:00)</p>
+                    <p>Kỹ thuật: <strong>1800.1763</strong> (7:30 - 22:00)</p>
+                    <p>Khiếu nại: <strong>1800.1062</strong> (8:00 - 21:30)</p>
+                </div>
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-dark text-decoration-none">Giới thiệu công ty</a></li>
+                        <li><a href="#" class="text-dark text-decoration-none">Tuyển dụng</a></li>
+                        <li><a href="#" class="text-dark text-decoration-none">Gửi góp ý, khiếu nại</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p>&copy; 2024 Thế Giới Di Động Clone.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Sakura Effect -->
+    <style>
+        .sakura {
+            position: fixed;
+            top: -10vh;
+            z-index: 9999;
+            user-select: none;
+            pointer-events: none;
+            animation-name: fall, sway;
+            animation-timing-function: linear, ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10vh;
+                opacity: 1;
+            }
+
+            100% {
+                top: 110vh;
+                opacity: 0;
+            }
+        }
+
+        @keyframes sway {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateX(50px) rotate(180deg);
+            }
+
+            100% {
+                transform: translateX(0) rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sakuraContainer = document.body;
+            const createSakura = () => {
+                const sakura = document.createElement('div');
+                sakura.classList.add('sakura');
+
+                // Randomize appearance
+                const size = Math.random() * 10 + 10 + 'px';
+                sakura.style.width = size;
+                sakura.style.height = size;
+                sakura.style.left = Math.random() * 100 + 'vw';
+                sakura.style.background = '#ffb7b2';
+                sakura.style.borderRadius = '50% 50% 0 50%'; // Simple petal shape
+                sakura.style.opacity = Math.random() * 0.5 + 0.3;
+
+                // Randomize animation
+                const duration = Math.random() * 5 + 5 + 's';
+                sakura.style.animationDuration = `${duration}, ${Math.random() * 3 + 2}s`;
+                sakura.style.animationDelay = '0s';
+
+                sakuraContainer.appendChild(sakura);
+
+                // Remove after animation
+                setTimeout(() => {
+                    sakura.remove();
+                }, parseFloat(duration) * 1000);
+            };
+
+            setInterval(createSakura, 300); // Add a new petal every 300ms
+        });
+    </script>
+</body>
+
+</html>

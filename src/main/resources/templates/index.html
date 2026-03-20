@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ | Thế Giới Di Động</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="/" class="logo">TGDĐ</a>
+        <div class="nav-links" id="auth-links">
+            <a th:href="@{/login}">Đăng nhập</a>
+            <a th:href="@{/signup}" class="btn btn-primary" style="padding: 0.5rem 1rem; width: auto;">Đăng ký</a>
+        </div>
+        <div class="user-profile" id="user-profile" style="display: none;">
+            <span>Xin chào, <strong id="display-name"></strong></span>
+            <button onclick="logout()" class="btn" style="padding: 0.5rem 1rem; width: auto; background: rgba(255,255,255,0.1); color: white;">Đăng xuất</button>
+        </div>
+    </nav>
+
+    <main class="hero">
+        <h1>Khám phá công nghệ mới</h1>
+        <p>Hệ thống bán lẻ điện thoại di động, laptop, phụ kiện chính hãng hàng đầu Việt Nam.</p>
+        <div id="protected-content" style="margin-top: 2rem; padding: 2rem; background: var(--card-bg); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); display: none;">
+            <h3>Dành cho thành viên</h3>
+            <p>Phần nội dung này chỉ hiển thị khi bạn đã đăng nhập thành công!</p>
+        </div>
+    </main>
+
+    <script th:src="@{/js/auth.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user && user.token) {
+                document.getElementById('protected-content').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::content})}">
+<head>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow-sm border-0 rounded-4 mt-4">
+                    <div class="card-header bg-warning rounded-top-4 text-center py-3">
+                        <h4 class="mb-0 fw-bold"><i class="fas fa-sign-in-alt me-2"></i>Đăng nhập</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            Tên đăng nhập hoặc mật khẩu không chính xác!
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            Bạn đã đăng xuất thành công.
+                        </div>
+                        <form th:action="@{/login}" method="post">
+                            <div class="mb-3">
+                                <label for="username" class="form-label fw-bold">Tên đăng nhập (<span class="text-danger">*</span>)</label>
+                                <input type="text" id="username" name="username" class="form-control" required placeholder="Nhập tên đăng nhập">
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="form-label fw-bold">Mật khẩu (<span class="text-danger">*</span>)</label>
+                                <input type="password" id="password" name="password" class="form-control" required placeholder="Nhập mật khẩu">
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100 fw-bold py-2">Đăng nhập ngay</button>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center pb-4">
+                        Chưa có tài khoản? <a href="/register" class="text-primary text-decoration-none fw-bold">Đăng ký tại đây</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

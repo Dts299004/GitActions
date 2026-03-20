@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: layout(~{::content})}">
+
+<head>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <!-- Flash messages -->
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="d-flex justify-content-end align-items-center mb-3">
+            <div>
+                <a href="/cart" class="btn btn-warning me-2 fw-bold" style="background:#fed700;border-color:#fed700;">
+                    <i class="fas fa-shopping-cart me-1"></i>Giỏ hàng
+                </a>
+                <a sec:authorize="hasRole('ADMIN')" href="/categories/add" class="btn btn-light border me-2"><i class="fas fa-folder-plus"></i> Thêm danh mục</a>
+                <a sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" href="/products/add" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm sản phẩm</a>
+            </div>
+        </div>
+
+        <!-- ===== KHU VỰC: SẢN PHẨM GIẢM GIÁ (FLASH SALE) ===== -->
+        <div th:if="${discountedProducts != null and !#lists.isEmpty(discountedProducts)}">
+            <h4 class="fw-bold mb-4 mt-2 px-2 border-start border-4 border-warning text-warning">Sản Phẩm Khuyến Mãi
+            </h4>
+            <!-- Flash Sale Banner -->
+            <div class="container mb-4">
+                <div class="bg-white rounded-4 p-2 d-flex align-items-center justify-content-between shadow-sm"
+                    style="max-width: 800px; margin: 0 auto; min-height: 80px;">
+                    <div class="d-flex align-items-center bg-danger text-white rounded-4 px-3 py-2"
+                        style="gap: 10px; height: 100%;">
+                        <span class="fw-bold small text-nowrap">Chỉ còn:</span>
+                        <div class="d-flex gap-1 fw-bold fs-5">
+                            <span class="bg-white text-danger px-2 rounded">01</span>:
+                            <span class="bg-white text-danger px-2 rounded">04</span>:
+                            <span class="bg-white text-danger px-2 rounded">18</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2 mb-5">
+                <div class="col" th:each="product : ${discountedProducts}">
+                    <div class="card h-100 border-0 shadow-sm product-card"
+                        style="border-radius: 4px; overflow: hidden; position: relative;">
+                        <!-- Hover Actions (Edit/Delete) -->
+                        <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" class="action-buttons position-absolute top-0 end-0 p-2"
+                            style="z-index: 10; display: none;">
+                            <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-sm btn-primary me-1"
+                                title="Sửa"><i class="fas fa-edit"></i></a>
+                            <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn btn-sm btn-danger"
+                                title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')"><i
+                                    class="fas fa-trash"></i></a>
+                        </div>
+                        <div
+                            style="position: absolute; top: 0; left: 0; background-color: #f1f1f1; font-size: 10px; padding: 2px 5px; border-bottom-right-radius: 4px;">
+                            Trả góp 0%</div>
+                        <!-- Product Image -->
+                        <div class="text-center p-2">
+                            <img th:src="@{${product.image != null ? product.image : 'https://placehold.co/160x160'}}"
+                                class="card-img-top" alt="Product Image"
+                                style="max-height: 160px; width: auto; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-2 d-flex flex-column">
+                            <h6 class="card-title text-primary mb-1"
+                                style="font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 32px;">
+                                <a th:href="@{/products/edit/{id}(id=${product.id})}"
+                                    class="text-decoration-none text-dark" th:text="${product.name}">Tên SP</a>
+                            </h6>
+                            <div class="mb-1 text-muted text-truncate" style="font-size: 11px;"
+                                th:if="${product.category != null}">
+                                <i class="fas fa-tag me-1 text-secondary"></i><span
+                                    th:text="${product.category.name}">Danh mục</span>
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Giá giảm (Discount Price) -->
+                                <div class="text-danger fw-bold" style="font-size: 14px;"
+                                    th:text="${#numbers.formatDecimal(product.price - (product.price * product.discountPercentage / 100), 0, 'COMMA', 0, 'POINT')} + '₫'">
+                                </div>
+                                <!-- Giá gốc bị gạch bỏ -->
+                                <div class="d-flex align-items-center" style="font-size: 11px;">
+                                    <span class="text-decoration-line-through text-muted me-1"
+                                        th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + '₫'"></span>
+                                    <span class="text-danger bg-danger bg-opacity-10 px-1 rounded"
+                                        th:text="'-' + ${#numbers.formatInteger(product.discountPercentage, 0)} + '%'"></span>
+                                </div>
+                                <!-- Mức độ còn lại & Nút Mua -->
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <span th:if="${product.promoQuantity != null && product.promoQuantity >= 0}" 
+                                          class="badge bg-warning text-dark px-2 py-1" style="font-size: 10px;">
+                                        <i class="fas fa-fire me-1 text-danger"></i>Còn <span th:text="${product.promoQuantity}"></span> suất
+                                    </span>
+                                    <span th:unless="${product.promoQuantity != null && product.promoQuantity >= 0}"></span> <!-- Dummy span cho flex-between -->
+                                </div>
+                                <button type="button" class="btn w-100 py-1 mt-1"
+                                    th:classappend="${product.promoQuantity != null && product.promoQuantity == 0} ? 'btn-secondary disabled' : 'btn-outline-danger'"
+                                    style="font-size: 12px; border-radius: 4px;"
+                                    th:data-id="${product.id}"
+                                    th:data-name="${product.name}"
+                                    th:data-price="${product.price - (product.price * product.discountPercentage / 100)}"
+                                    th:data-promo-quantity="${product.promoQuantity}"
+                                    th:disabled="${product.promoQuantity != null && product.promoQuantity == 0}"
+                                    th:text="${product.promoQuantity != null && product.promoQuantity == 0 ? 'Hết hàng' : 'Mua ngay'}"
+                                    onclick="openBuyModal(this)">Mua ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== KHU VỰC: SẢN PHẨM THƯỜNG ===== -->
+        <div th:if="${normalProducts != null and !#lists.isEmpty(normalProducts)}">
+            <h4 class="fw-bold mb-4 mt-2 px-2 border-start border-4 border-primary">Sản Phẩm Nổi Bật</h4>
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-2">
+                <div class="col" th:each="product : ${normalProducts}">
+                    <div class="card h-100 border-0 shadow-sm product-card"
+                        style="border-radius: 4px; overflow: hidden; position: relative;">
+                        <!-- Hover Actions (Edit/Delete) -->
+                        <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" class="action-buttons position-absolute top-0 end-0 p-2"
+                            style="z-index: 10; display: none;">
+                            <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-sm btn-primary me-1"
+                                title="Sửa"><i class="fas fa-edit"></i></a>
+                            <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn btn-sm btn-danger"
+                                title="Xóa" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')"><i
+                                    class="fas fa-trash"></i></a>
+                        </div>
+                        <div
+                            style="position: absolute; top: 0; left: 0; background-color: #f1f1f1; font-size: 10px; padding: 2px 5px; border-bottom-right-radius: 4px;">
+                            Trả góp 0%</div>
+                        <!-- Product Image -->
+                        <div class="text-center p-2">
+                            <img th:src="@{${product.image != null ? product.image : 'https://placehold.co/160x160'}}"
+                                class="card-img-top" alt="Product Image"
+                                style="max-height: 160px; width: auto; object-fit: contain;">
+                        </div>
+                        <div class="card-body p-2 d-flex flex-column">
+                            <h6 class="card-title text-primary mb-1"
+                                style="font-size: 13px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 32px;">
+                                <a th:href="@{/products/edit/{id}(id=${product.id})}"
+                                    class="text-decoration-none text-dark" th:text="${product.name}">Tên SP</a>
+                            </h6>
+                            <div class="mb-1 text-muted text-truncate" style="font-size: 11px;"
+                                th:if="${product.category != null}">
+                                <i class="fas fa-tag me-1 text-secondary"></i><span
+                                    th:text="${product.category.name}">Danh mục</span>
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Mức Giá Gốc -->
+                                <div class="text-danger fw-bold" style="font-size: 14px;"
+                                    th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + '₫'">
+                                </div>
+                                <div style="height: 16px;"></div> <!-- Spacing cho bằng thẻ giảm giá -->
+                                <button type="button" class="btn btn-outline-primary w-100 mt-2 py-1"
+                                    style="font-size: 12px; border-radius: 4px;"
+                                    th:data-id="${product.id}"
+                                    th:data-name="${product.name}"
+                                    th:data-price="${product.price}"
+                                    th:data-promo-quantity="${product.promoQuantity}"
+                                    onclick="openBuyModal(this)">Mua ngay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .product-card:hover .action-buttons {
+                display: block !important;
+            }
+
+            .product-card:hover {
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+                transform: translateY(-2px);
+                transition: all 0.2s;
+            }
+        </style>
+
+        <div class="col" th:if="${#lists.isEmpty(products)}">
+            <div class="card h-100 border-0 shadow-sm p-5 text-center w-100 mt-4 rounded-4">
+                <p class="text-muted fs-5"><i class="fas fa-box-open mb-3 fs-1 text-secondary"></i><br>Chưa có sản phẩm
+                    nào.</p>
+            </div>
+        </div>
+
+        <!-- Buy Modal (real form POST to /cart/add) -->
+        <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background:#cd1818;">
+                        <h5 class="modal-title fw-bold text-white" id="buyModalLabel">
+                            <i class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ hàng
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="buyForm" action="/cart/add" method="post">
+                            <input type="hidden" id="modalProductId" name="productId">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Sản phẩm</label>
+                                <input type="text" class="form-control" id="modalProductName" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Giá</label>
+                                <input type="text" class="form-control text-danger fw-bold" id="modalProductPrice" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Số lượng</label>
+                                <input type="number" class="form-control" name="quantity" id="modalQuantity" value="1" min="1">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-danger fw-bold" onclick="submitBuy()">
+                            <i class="fas fa-cart-plus me-1"></i>Thêm vào giỏ hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function openBuyModal(element) {
+                var id    = element.getAttribute('data-id');
+                var name  = element.getAttribute('data-name');
+                var price = element.getAttribute('data-price');
+                var promoQty = element.getAttribute('data-promo-quantity');
+                
+                document.getElementById('modalProductId').value    = id;
+                document.getElementById('modalProductName').value  = name;
+                document.getElementById('modalProductPrice').value = new Intl.NumberFormat('vi-VN').format(Math.round(price)) + '₫';
+                
+                var qtyInput = document.getElementById('modalQuantity');
+                qtyInput.value = 1;
+                
+                // Nếu có limit
+                if (promoQty && parseInt(promoQty) > 0) {
+                    qtyInput.max = promoQty;
+                    qtyInput.value = 1;
+                    document.getElementById('modalProductName').value = name + " (Tối đa " + promoQty + ")";
+                } else {
+                    qtyInput.removeAttribute('max');
+                }
+                
+                var myModal = new bootstrap.Modal(document.getElementById('buyModal'));
+                myModal.show();
+            }
+
+            function submitBuy() {
+                var qtyInput = document.getElementById('modalQuantity');
+                var qty = parseInt(qtyInput.value);
+                var max = qtyInput.hasAttribute('max') ? parseInt(qtyInput.max) : null;
+                
+                if (!qty || qty < 1) {
+                    alert('Vui lòng nhập số lượng hợp lệ!');
+                    return;
+                }
+                
+                if (max !== null && qty > max) {
+                    alert('Sản phẩm khuyến mãi chỉ được mua tối đa ' + max + ' cái!');
+                    return;
+                }
+                
+                document.getElementById('buyForm').submit();
+            }
+        </script>
+    </div>
+</body>
+
+</html>

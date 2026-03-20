@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::content})}">
+<head><title>Lịch sử đơn hàng</title></head>
+<body>
+<div th:fragment="content">
+<style>
+    .orders-page { background: #fff; border-radius: 10px; padding: 24px; min-height: 400px; }
+    .orders-title { font-size: 22px; font-weight: 800; color: #cd1818; border-bottom: 3px solid #cd1818; padding-bottom: 10px; margin-bottom: 20px; }
+    .order-card { border: 1px solid #f0f0f0; border-radius: 10px; margin-bottom: 16px; overflow: hidden; transition: box-shadow 0.2s; }
+    .order-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
+    .order-card-header { background: #fafafa; border-bottom: 1px solid #f0f0f0; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .order-id { font-size: 12px; color: #888; font-family: monospace; }
+    .badge-status { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .badge-processing { background: #fff3cd; color: #856404; }
+    .badge-success { background: #d1e7dd; color: #0a5e3f; }
+    .badge-failed { background: #f8d7da; color: #842029; }
+    .order-card-body { padding: 14px 18px; }
+    .order-products { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .product-thumb { display: flex; align-items: center; gap: 6px; background: #fafafa; border: 1px solid #eee; border-radius: 6px; padding: 4px 8px; font-size: 12px; }
+    .product-thumb img { width: 32px; height: 32px; object-fit: contain; border-radius: 4px; }
+    .order-meta { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; color: #555; }
+    .order-footer { display: flex; justify-content: space-between; align-items: center; padding: 10px 18px; background: #fff9f9; border-top: 1px solid #f0f0f0; }
+    .order-total { font-size: 16px; font-weight: 800; color: #cd1818; }
+    .empty-orders { text-align: center; padding: 60px 20px; color: #aaa; }
+    .empty-orders i { font-size: 64px; display: block; margin-bottom: 12px; color: #ddd; }
+</style>
+
+<div class="orders-page">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="orders-title"><i class="fas fa-history me-2"></i>Lịch sử đơn hàng</h2>
+        <a href="/products" class="btn btn-sm btn-outline-danger"><i class="fas fa-arrow-left me-1"></i>Tiếp tục mua sắm</a>
+    </div>
+
+    <!-- Empty state -->
+    <div th:if="${#lists.isEmpty(orders)}" class="empty-orders">
+        <i class="fas fa-box-open"></i>
+        <p class="fs-5 fw-bold text-muted">Chưa có đơn hàng nào!</p>
+        <a href="/products" class="btn btn-danger mt-2"><i class="fas fa-shopping-cart me-1"></i>Mua ngay</a>
+    </div>
+
+    <!-- Order list -->
+    <div th:each="order : ${orders}" class="order-card">
+        <div class="order-card-header">
+            <div>
+                <span class="fw-bold me-2"><i class="fas fa-receipt me-1 text-danger"></i>Đơn #<span th:text="${order.id}"></span></span>
+                <span class="order-id" th:text="${order.orderId}"></span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <small class="text-muted" th:text="${#temporals.format(order.createdAt, 'HH:mm dd/MM/yyyy')}"></small>
+                <span th:classappend="${order.status == 'Đang xử lý'} ? 'badge-processing' : (${order.status == 'Thành công'} ? 'badge-success' : 'badge-failed')"
+                      class="badge-status" th:text="${order.status}"></span>
+            </div>
+        </div>
+        <div class="order-card-body">
+            <div class="order-products">
+                <div th:each="item : ${order.items}" class="product-thumb">
+                    <img th:src="${item.productImage != null ? item.productImage : 'https://placehold.co/32x32'}" alt="img">
+                    <span>
+                        <span th:text="${item.productName}"></span>
+                        <span class="text-muted ms-1">x<span th:text="${item.quantity}"></span></span>
+                    </span>
+                </div>
+            </div>
+            <div class="order-meta">
+                <span><i class="fas fa-user me-1 text-danger"></i><span th:text="${order.customerName}"></span></span>
+                <span><i class="fas fa-phone me-1 text-danger"></i><span th:text="${order.customerPhone}"></span></span>
+                <span th:if="${order.customerAddress != null and !#strings.isEmpty(order.customerAddress)}">
+                    <i class="fas fa-map-marker-alt me-1 text-danger"></i><span th:text="${order.customerAddress}"></span>
+                </span>
+                <span><i class="fas fa-star me-1 text-warning"></i>+<span th:text="${order.loyaltyPoints}"></span>đ tích lũy</span>
+            </div>
+        </div>
+        <div class="order-footer">
+            <div class="d-flex gap-3 text-muted" style="font-size:13px;">
+                <span>Tiền hàng: <b th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + '₫'"></b></span>
+                <span>Ship: <b th:text="${order.shippingFee == 0 ? 'Miễn phí' : #numbers.formatDecimal(order.shippingFee, 0, 'COMMA', 0, 'POINT') + '₫'}"></b></span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <span class="order-total" th:text="${#numbers.formatDecimal(order.grandTotal, 0, 'COMMA', 0, 'POINT')} + '₫'"></span>
+                <a th:href="@{/orders/{id}(id=${order.id})}" class="btn btn-sm btn-outline-danger">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

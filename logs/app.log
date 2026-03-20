@@ -1,0 +1,156 @@
+2026-03-12T05:23:49.450+07:00  INFO 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : Starting DemoApplication using Java 19.0.2 with PID 4128 (C:\Users\ASUS\Downloads\demo\target\classes started by ASUS in C:\Users\ASUS\Downloads\demo)
+2026-03-12T05:23:49.450+07:00 DEBUG 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : Running with Spring Boot v3.2.2, Spring v6.1.3
+2026-03-12T05:23:49.450+07:00  INFO 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-03-12T05:23:49.575+07:00  INFO 4128 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-12T05:23:49.595+07:00  INFO 4128 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 4 JPA repository interfaces.
+2026-03-12T05:23:49.665+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-12T05:23:49.666+07:00  INFO 4128 --- [demo] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-12T05:23:49.666+07:00  INFO 4128 --- [demo] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.18]
+2026-03-12T05:23:49.675+07:00  INFO 4128 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-12T05:23:49.676+07:00  INFO 4128 --- [demo] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 225 ms
+2026-03-12T05:23:49.707+07:00  INFO 4128 --- [demo] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-12T05:23:49.709+07:00  INFO 4128 --- [demo] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-12T05:23:49.710+07:00  INFO 4128 --- [demo] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-12T05:23:49.711+07:00  INFO 4128 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2026-03-12T05:23:49.758+07:00  INFO 4128 --- [demo] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection org.postgresql.jdbc.PgConnection@80d96c
+2026-03-12T05:23:49.758+07:00  INFO 4128 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2026-03-12T05:23:49.762+07:00  WARN 4128 --- [demo] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-12T05:23:49.808+07:00  INFO 4128 --- [demo] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-12T05:23:49.865+07:00  INFO 4128 --- [demo] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-12T05:23:49.925+07:00 DEBUG 4128 --- [demo] [restartedMain] c.example.demo.security.AuthTokenFilter  : Filter 'authenticationJwtTokenFilter' configured for use
+2026-03-12T05:23:50.022+07:00  WARN 4128 --- [demo] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-12T05:23:50.037+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-03-12T05:23:50.100+07:00  INFO 4128 --- [demo] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@44f15d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@8712de, org.springframework.security.web.context.SecurityContextHolderFilter@e1bec1, org.springframework.security.web.header.HeaderWriterFilter@7ecad3, org.springframework.web.filter.CorsFilter@174c8a4, org.springframework.security.web.authentication.logout.LogoutFilter@11f350e, com.example.demo.security.AuthTokenFilter@14032ec, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@72706a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@211a5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1958e46, org.springframework.security.web.session.SessionManagementFilter@1d17a9c, org.springframework.security.web.access.ExceptionTranslationFilter@156b97e, org.springframework.security.web.access.intercept.AuthorizationFilter@ba5bef]
+2026-03-12T05:23:50.199+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-12T05:23:50.204+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-12T05:23:50.208+07:00  INFO 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : Started DemoApplication in 0.783 seconds (process running for 1122.588)
+2026-03-12T05:23:50.243+07:00  INFO 4128 --- [demo] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-03-12T05:23:51.628+07:00  INFO 4128 --- [demo] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 30 class path changes (30 additions, 0 deletions, 0 modifications)
+2026-03-12T05:23:51.638+07:00  INFO 4128 --- [demo] [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-12T05:23:51.638+07:00  INFO 4128 --- [demo] [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2026-03-12T05:23:51.640+07:00  INFO 4128 --- [demo] [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2026-03-12T05:23:51.715+07:00  INFO 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : Starting DemoApplication using Java 19.0.2 with PID 4128 (C:\Users\ASUS\Downloads\demo\target\classes started by ASUS in C:\Users\ASUS\Downloads\demo)
+2026-03-12T05:23:51.716+07:00 DEBUG 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : Running with Spring Boot v3.2.2, Spring v6.1.3
+2026-03-12T05:23:51.716+07:00  INFO 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-03-12T05:23:51.831+07:00  INFO 4128 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-12T05:23:51.845+07:00  INFO 4128 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 4 JPA repository interfaces.
+2026-03-12T05:23:51.925+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-12T05:23:51.925+07:00  INFO 4128 --- [demo] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-12T05:23:51.925+07:00  INFO 4128 --- [demo] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.18]
+2026-03-12T05:23:51.937+07:00  INFO 4128 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-12T05:23:51.937+07:00  INFO 4128 --- [demo] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 220 ms
+2026-03-12T05:23:51.968+07:00  INFO 4128 --- [demo] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-12T05:23:51.969+07:00  INFO 4128 --- [demo] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-12T05:23:51.973+07:00  INFO 4128 --- [demo] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-12T05:23:51.973+07:00  INFO 4128 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2026-03-12T05:23:52.020+07:00  INFO 4128 --- [demo] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection org.postgresql.jdbc.PgConnection@ab94b9
+2026-03-12T05:23:52.020+07:00  INFO 4128 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2026-03-12T05:23:52.026+07:00  WARN 4128 --- [demo] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-12T05:23:52.067+07:00  INFO 4128 --- [demo] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-12T05:23:52.116+07:00  INFO 4128 --- [demo] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-12T05:23:52.186+07:00 DEBUG 4128 --- [demo] [restartedMain] c.example.demo.security.AuthTokenFilter  : Filter 'authenticationJwtTokenFilter' configured for use
+2026-03-12T05:23:52.305+07:00  WARN 4128 --- [demo] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-12T05:23:52.325+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-03-12T05:23:52.398+07:00  INFO 4128 --- [demo] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@9840db, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1e1a645, org.springframework.security.web.context.SecurityContextHolderFilter@19f06a5, org.springframework.security.web.header.HeaderWriterFilter@1941e67, org.springframework.web.filter.CorsFilter@1211bb9, org.springframework.security.web.authentication.logout.LogoutFilter@10b89a4, com.example.demo.security.AuthTokenFilter@d7bf25, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@11ae179, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@80b0db, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@16a2dff, org.springframework.security.web.session.SessionManagementFilter@1792836, org.springframework.security.web.access.ExceptionTranslationFilter@173ef40, org.springframework.security.web.access.intercept.AuthorizationFilter@33d54f]
+2026-03-12T05:23:52.466+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-12T05:23:52.472+07:00  INFO 4128 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-12T05:23:52.475+07:00  INFO 4128 --- [demo] [restartedMain] com.example.demo.DemoApplication         : Started DemoApplication in 0.776 seconds (process running for 1124.854)
+2026-03-12T05:23:52.508+07:00  INFO 4128 --- [demo] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-03-12T05:24:03.092+07:00  INFO 4128 --- [demo] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-12T05:24:03.093+07:00  INFO 4128 --- [demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-12T05:24:03.093+07:00  INFO 4128 --- [demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-03-12T05:24:03.094+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/signup
+2026-03-12T05:24:03.094+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:03.094+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/signup
+2026-03-12T05:24:03.099+07:00  WARN 4128 --- [demo] [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Unexpected character ('\' (code 92)): was expecting double-quote to start field name]
+2026-03-12T05:24:03.099+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /error
+2026-03-12T05:24:03.100+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:03.100+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-1] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:24:23.274+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /signup
+2026-03-12T05:24:23.275+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:23.276+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /signup
+2026-03-12T05:24:23.376+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /css/style.css
+2026-03-12T05:24:23.382+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:23.376+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /js/auth.js
+2026-03-12T05:24:23.384+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:23.385+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /css/style.css
+2026-03-12T05:24:23.388+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /js/auth.js
+2026-03-12T05:24:23.623+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /favicon.ico
+2026-03-12T05:24:23.625+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:23.626+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-7] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:24:23.629+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-03-12T05:24:23.638+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:23.649+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-7] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:24:41.715+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/signup
+2026-03-12T05:24:41.717+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:41.719+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/signup
+2026-03-12T05:24:43.574+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /login
+2026-03-12T05:24:43.575+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:43.577+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /login
+2026-03-12T05:24:43.641+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /css/style.css
+2026-03-12T05:24:43.643+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /js/auth.js
+2026-03-12T05:24:43.645+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:43.646+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:43.646+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /css/style.css
+2026-03-12T05:24:43.647+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /js/auth.js
+2026-03-12T05:24:43.687+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /favicon.ico
+2026-03-12T05:24:43.689+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:43.696+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-2] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:24:43.701+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-03-12T05:24:43.706+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:24:43.710+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-2] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:25:07.535+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/signin
+2026-03-12T05:25:07.535+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:07.535+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/signin
+2026-03-12T05:25:07.541+07:00  INFO 4128 --- [demo] [http-nio-8080-exec-4] c.e.demo.controller.AuthController       : Login attempt for username: testuser
+2026-03-12T05:25:07.653+07:00  INFO 4128 --- [demo] [http-nio-8080-exec-4] c.e.d.security.UserDetailsServiceImpl    : Loading user by username: testuser
+2026-03-12T05:25:07.732+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-4] o.s.s.a.dao.DaoAuthenticationProvider    : Authenticated user
+2026-03-12T05:25:09.255+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /
+2026-03-12T05:25:09.256+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:09.256+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /
+2026-03-12T05:25:09.309+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /css/style.css
+2026-03-12T05:25:09.309+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /js/auth.js
+2026-03-12T05:25:09.309+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:09.309+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:09.309+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /css/style.css
+2026-03-12T05:25:09.309+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /js/auth.js
+2026-03-12T05:25:09.417+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /favicon.ico
+2026-03-12T05:25:09.418+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:09.418+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-8] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:25:09.418+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-03-12T05:25:09.419+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:09.419+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-8] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:25:54.023+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /products
+2026-03-12T05:25:54.023+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:54.023+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /products
+2026-03-12T05:25:54.061+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /js/auth.js
+2026-03-12T05:25:54.061+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:54.062+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /js/auth.js
+2026-03-12T05:25:54.062+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /images/top-banner.png
+2026-03-12T05:25:54.063+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:54.063+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /images/top-banner.png
+2026-03-12T05:25:54.095+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /images/banner-horizontal.jpg
+2026-03-12T05:25:54.095+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:54.096+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /images/banner-horizontal.jpg
+2026-03-12T05:25:54.242+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /favicon.ico
+2026-03-12T05:25:54.243+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:54.243+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-2] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:25:54.244+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-03-12T05:25:54.244+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:25:54.244+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-2] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:26:05.177+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing GET /products
+2026-03-12T05:26:05.177+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:26:05.180+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured GET /products
+2026-03-12T05:26:05.223+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /js/auth.js
+2026-03-12T05:26:05.225+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:26:05.225+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /js/auth.js
+2026-03-12T05:26:05.251+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /favicon.ico
+2026-03-12T05:26:05.252+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:26:05.252+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-9] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:26:05.253+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /error
+2026-03-12T05:26:05.253+07:00 DEBUG 4128 --- [demo] [http-nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-03-12T05:26:05.253+07:00 ERROR 4128 --- [demo] [http-nio-8080-exec-9] c.e.demo.security.AuthEntryPointJwt      : Unauthorized error: Full authentication is required to access this resource
+2026-03-12T05:31:05.354+07:00  INFO 4128 --- [demo] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 31 class path changes (0 additions, 30 deletions, 1 modification)
+2026-03-12T05:31:05.364+07:00  INFO 4128 --- [demo] [Thread-19] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-12T05:31:05.364+07:00  INFO 4128 --- [demo] [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown initiated...
+2026-03-12T05:31:05.365+07:00  INFO 4128 --- [demo] [Thread-19] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Shutdown completed.

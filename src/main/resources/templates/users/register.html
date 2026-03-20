@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::content})}">
+<head>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 rounded-4 mt-4">
+                    <div class="card-header bg-danger text-white rounded-top-4 text-center py-3">
+                        <h4 class="mb-0 fw-bold"><i class="fas fa-user-plus me-2"></i>Đăng ký tài khoản mới</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div th:if="${errors}" class="alert alert-danger">
+                            <ul class="mb-0">
+                                <li th:each="error : ${errors}" th:text="${error}"></li>
+                            </ul>
+                        </div>
+                        <form th:action="@{/register}" method="post" th:object="${user}">
+                            <div class="mb-3">
+                                <label for="username" class="form-label fw-bold">Tên đăng nhập (<span class="text-danger">*</span>)</label>
+                                <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Nhập tên đăng nhập">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-bold">Mật khẩu (<span class="text-danger">*</span>)</label>
+                                <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Nhập mật khẩu">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-bold">Email (<span class="text-danger">*</span>)</label>
+                                <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Nhập địa chỉ email">
+                            </div>
+                            <div class="mb-4">
+                                <label for="phone" class="form-label fw-bold">Số điện thoại (<span class="text-danger">*</span>)</label>
+                                <input type="text" id="phone" th:field="*{phone}" class="form-control" placeholder="Nhập 10 số điện thoại">
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="role" class="form-label fw-bold">Vai trò đăng ký (<span class="text-danger">*</span>)</label>
+                                <select name="roleName" id="role" class="form-select">
+                                    <option value="USER">Người dùng (USER)</option>
+                                    <option value="MANAGER">Quản lý (MANAGER)</option>
+                                    <option value="ADMIN">Quản trị viên (ADMIN)</option>
+                                </select>
+                            </div>
+                            <!-- Assign custom starting points if wanted, but backend sets it to default 0 via db -->
+                            <button type="submit" class="btn btn-warning text-dark w-100 fw-bold py-2">Đăng ký hoàn tất</button>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white border-0 text-center pb-4">
+                        Bạn đã có tài khoản? <a href="/login" class="text-danger fw-bold text-decoration-none">Đăng nhập ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: layout(~{::content})}">
+
+<head>
+    <title>Phụ kiện - Thế Giới Di Động</title>
+</head>
+
+<body>
+    <div th:fragment="content">
+        <style>
+            /* ===== ACCESSORIES PAGE ===== */
+            .acc-page {
+                background: #fff;
+                border-radius: 10px;
+                padding: 20px 24px 32px;
+            }
+
+            .acc-toolbar {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            /* 2-column parent grid */
+            .acc-two-col {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+            }
+
+            @media (max-width: 768px) {
+                .acc-two-col {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            /* Each parent section */
+            .acc-section {
+                padding: 0 12px 24px 0;
+                border-bottom: 1px solid #f0f0f0;
+                margin-bottom: 20px;
+            }
+
+            .acc-section:nth-child(even) {
+                padding-left: 24px;
+                padding-right: 0;
+                border-left: 1px solid #f0f0f0;
+            }
+
+            .acc-section-title {
+                font-size: 15px;
+                font-weight: 700;
+                color: #111;
+                margin-bottom: 14px;
+                display: flex;
+                align-items: center;
+                gap: 7px;
+            }
+
+            .acc-section-title i {
+                color: #cd1818;
+            }
+
+            /* 6-column children grid */
+            .acc-children {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                gap: 4px 2px;
+            }
+
+            @media (max-width: 992px) {
+                .acc-children {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+
+            @media (max-width: 576px) {
+                .acc-children {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            /* Each child item */
+            .acc-child {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 4px;
+                border-radius: 8px;
+                text-decoration: none;
+                color: #333;
+                transition: all 0.15s ease;
+                position: relative;
+                cursor: pointer;
+            }
+
+            .acc-child:hover {
+                background: #fff5f5;
+                color: #cd1818;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(205, 24, 24, 0.08);
+            }
+
+            /* Image container */
+            .acc-img-wrap {
+                width: 72px;
+                height: auto;
+                min-height: 50px;
+                border-radius: 4px;
+                overflow: hidden;
+                border: 1px solid #ececec;
+                background: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                transition: border-color 0.15s ease;
+                padding: 4px;
+            }
+
+            .acc-child:hover .acc-img-wrap {
+                border-color: #ffbdbd;
+            }
+
+            .acc-img-wrap img {
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                border-radius: 4px;
+                display: block;
+            }
+
+            /* Fallback icon when no image */
+            .acc-img-wrap .fallback-icon {
+                font-size: 24px;
+                color: #888;
+            }
+
+            /* Child name */
+            .acc-child-name {
+                font-size: 11.5px;
+                line-height: 1.35;
+                text-align: center;
+                max-width: 80px;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                word-break: break-word;
+            }
+
+            /* Badges */
+            .acc-badge {
+                position: absolute;
+                top: 4px;
+                right: 4px;
+                font-size: 9px;
+                font-weight: 700;
+                padding: 1px 5px;
+                border-radius: 8px;
+                color: #fff;
+                line-height: 1.5;
+            }
+
+            .acc-badge.hot {
+                background: #cd1818;
+            }
+
+            .acc-badge.new {
+                background: #ff7c08;
+            }
+
+            /* Empty state */
+            .acc-empty {
+                text-align: center;
+                padding: 60px 20px;
+                color: #aaa;
+            }
+
+            .acc-empty i {
+                font-size: 52px;
+                margin-bottom: 16px;
+                display: block;
+            }
+        </style>
+
+        <div class="acc-page">
+            <!-- Toolbar -->
+            <div class="acc-toolbar d-flex flex-wrap gap-2">
+                <!-- Nút bật Popup Sửa danh mục -->
+                <button sec:authorize="hasRole('ADMIN')" type="button" class="btn btn-info fw-bold text-white" data-bs-toggle="modal"
+                    data-bs-target="#editCategoryModal">
+                    <i class="fas fa-edit me-1"></i>Sửa danh mục
+                </button>
+                <a sec:authorize="hasRole('ADMIN')" href="/categories/add" class="btn btn-warning fw-bold"
+                    style="background:#fed700;border-color:#fed700;">
+                    <i class="fas fa-folder-plus me-1"></i>Thêm danh mục
+                </a>
+                <a sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" href="/products/add" class="btn btn-primary fw-bold">
+                    <i class="fas fa-plus me-1"></i>Thêm sản phẩm
+                </a>
+            </div>
+
+            <!-- Modal Chọn danh mục để sửa -->
+            <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fw-bold" id="editCategoryModalLabel">Chọn danh mục cần chỉnh sửa</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label class="form-label fw-bold">Danh sách tất cả danh mục (Cha & Con)</label>
+                            <select class="form-select form-select-lg" id="categoryToEdit">
+                                <!-- Danh mục cha -->
+                                <optgroup label="-- Nhóm Danh Mục (Cấp 1) --">
+                                    <option th:each="p : ${parentCategories}" th:value="${p.id}" th:text="${p.name}">
+                                    </option>
+                                </optgroup>
+                                <!-- Danh mục con gom theo nhóm cha -->
+                                <th:block th:each="p : ${parentCategories}">
+                                    <optgroup th:if="${p.children != null and !#lists.isEmpty(p.children)}"
+                                        th:label="${'- Danh Mục Con thuộc: ' + p.name + ' -'}">
+                                        <option th:each="c : ${p.children}" th:value="${c.id}" th:text="${c.name}">
+                                        </option>
+                                    </optgroup>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary fw-bold" onclick="goToEdit()">
+                                Tiếp tục chỉnh sửa
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function goToEdit() {
+                    var id = document.getElementById('categoryToEdit').value;
+                    if (id) {
+                        window.location.href = '/categories/edit/' + id;
+                    }
+                }
+            </script>
+
+            <!-- Empty -->
+            <div class="acc-empty" th:if="${#lists.isEmpty(parentCategories)}">
+                <i class="fas fa-folder-open"></i>
+                <p>Chưa có danh mục nào.</p>
+                <a sec:authorize="hasRole('ADMIN')" href="/categories/add" class="btn btn-warning fw-bold"
+                    style="background:#fed700;border-color:#fed700;">
+                    <i class="fas fa-folder-plus me-1"></i>Thêm danh mục
+                </a>
+            </div>
+
+            <!-- 2-column layout -->
+            <div class="acc-two-col" th:if="${!#lists.isEmpty(parentCategories)}">
+                <div class="acc-section" th:each="parent, iStat : ${parentCategories}">
+
+                    <!-- Parent title -->
+                    <div class="acc-section-title d-flex justify-content-between w-100 pe-3">
+                        <div>
+                            <i th:class="${parent.icon != null ? parent.icon : 'fas fa-folder'}"></i>
+                            <span th:text="${parent.name}">Nhóm</span>
+                        </div>
+                        <div sec:authorize="hasRole('ADMIN')" style="font-size: 13px;">
+                            <a th:href="@{'/categories/edit/' + ${parent.id}}"
+                                class="text-primary text-decoration-none me-2"><i class="fas fa-edit"></i> Sửa</a>
+                            <a th:href="@{'/categories/delete/' + ${parent.id}}"
+                                class="text-danger text-decoration-none"
+                                onclick="return confirm('Bạn có chắc muốn xoá cả danh mục cha và các nhánh con của nó?');"><i
+                                    class="fas fa-trash-alt"></i> Xoá</a>
+                        </div>
+                    </div>
+
+                    <!-- Children grid -->
+                    <div class="acc-children" th:if="${parent.children != null and !#lists.isEmpty(parent.children)}">
+                        <div class="acc-child position-relative" th:each="child, cStat : ${parent.children}">
+                            <!-- Admin Actions -->
+                            <div sec:authorize="hasRole('ADMIN')" class="position-absolute" style="top: 2px; right: 2px; z-index: 5; font-size: 11px;">
+                                <a th:href="@{'/categories/edit/' + ${child.id}}" class="text-primary me-1"><i
+                                        class="fas fa-edit"></i></a>
+                                <a th:href="@{'/categories/delete/' + ${child.id}}" class="text-danger"
+                                    onclick="return confirm('Xoá danh mục này?');"><i
+                                        class="fas fa-times-circle"></i></a>
+                            </div>
+
+                            <!-- Image thumbnail -->
+                            <div class="acc-img-wrap">
+                                <img th:if="${child.image != null}" th:src="${child.image}" th:alt="${child.name}"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                                <!-- Fallback icon -->
+                                <span class="fallback-icon"
+                                    th:style="${child.image != null ? 'display:none' : 'display:flex'}">
+                                    <i th:class="${child.icon != null ? child.icon : 'fas fa-tag'}"></i>
+                                </span>
+                            </div>
+
+                            <!-- Name -->
+                            <span class="acc-child-name" th:text="${child.name}">Tên</span>
+                        </div>
+                    </div>
+
+                    <div th:if="${parent.children == null or #lists.isEmpty(parent.children)}" class="text-muted small">
+                        Chưa có danh mục con.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::content})}">
+
+<head>
+    <title>Thêm/Sửa sản phẩm</title>
+</head>
+
+<body>
+
+    <div th:fragment="content">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+                        <h3 class="card-title fw-bold mb-0"
+                            th:text="${product.id == null ? 'Thêm Sản Phẩm Mới' : 'Cập Nhật Sản Phẩm'}">Thêm Sản Phẩm
+                        </h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form th:action="@{${product.id == null ? '/products/add' : '/products/update/' + product.id}}"
+                            th:object="${product}" method="post" enctype="multipart/form-data">
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-semibold">Tên sản phẩm</label>
+                                <input type="text" class="form-control form-control-lg" id="name" th:field="*{name}"
+                                    placeholder="Nhập tên sản phẩm" required>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}"
+                                    th:errors="*{name}">Lỗi tên</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="category" class="form-label fw-semibold">Danh mục</label>
+                                <select class="form-select form-select-lg" id="category" th:field="*{category}">
+                                    <option value="">-- Chỉ chọn danh mục con --</option>
+                                    <option th:each="cat : ${categories}" th:value="${cat.id}"
+                                        th:text="${cat.parent != null ? cat.parent.name + ' > ' + cat.name : cat.name}">
+                                        Danh mục 1</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="price" class="form-label fw-semibold">Giá bán gốc (VNĐ)</label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" class="form-control" id="price" th:field="*{price}"
+                                        placeholder="0" required min="0" step="1000">
+                                    <span class="input-group-text">đ</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="discountPercentage" class="form-label fw-semibold text-danger">Giảm giá (%)
+                                    <span class="text-muted fw-normal small">(Để trống lập tức không
+                                        giảm)</span></label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" class="form-control border-danger border-opacity-50"
+                                        id="discountPercentage" th:field="*{discountPercentage}" placeholder="0" min="0"
+                                        max="100" step="1">
+                                    <span
+                                        class="input-group-text bg-danger bg-opacity-10 text-danger border-danger border-opacity-50">%</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="promoQuantity" class="form-label fw-semibold text-danger">Số lượng khuyến mãi
+                                    <span class="text-muted fw-normal small">(Giới hạn số lượng mua giá rẻ)</span></label>
+                                <div class="input-group input-group-lg">
+                                    <input type="number" class="form-control border-danger border-opacity-50"
+                                        id="promoQuantity" th:field="*{promoQuantity}" placeholder="0" min="0" step="1">
+                                    <span
+                                        class="input-group-text bg-danger bg-opacity-10 text-danger border-danger border-opacity-50">Cái</span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Product Image</label>
+                                <input type="file" class="form-control" id="image" name="imageFile" accept="image/*">
+                                <div class="form-text">Upload an image file</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="imageUrl" class="form-label">Or Image URL</label>
+                                <input type="text" class="form-control" id="imageUrl" name="imageUrl"
+                                    placeholder="https://example.com/image.jpg">
+                                <div class="form-text">Paste an image link if not uploading</div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="description" class="form-label fw-semibold">Mô tả</label>
+                                <textarea class="form-control" id="description" th:field="*{description}" rows="4"
+                                    placeholder="Mô tả chi tiết sản phẩm..."></textarea>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/products" class="btn btn-light me-md-2">Hủy bỏ</a>
+                                <button type="submit" class="btn btn-primary px-5 fw-bold">Lưu sản phẩm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
