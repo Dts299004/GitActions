@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ "main" ] # Chạy khi bạn push code lên nhánh main
+    branches: [ "main" ]
 
 jobs:
   build-and-push:
@@ -12,16 +12,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
+      - name: Login Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.SON }}
           password: ${{ secrets.PASS }}
 
-      - name: Build and push Docker image
+      - name: Build & Push
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          # Thay 'demo-app' bằng tên repository bạn muốn đặt trên Docker Hub
-          tags: son/demo-app:latest
+          tags: dinhthaison29/demo-app:latest
